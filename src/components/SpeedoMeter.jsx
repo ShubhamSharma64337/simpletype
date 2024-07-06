@@ -1,6 +1,4 @@
-import React from 'react'
-
-export default function SpeedoMeter({characters,startTime,cpm}) {
+export default function SpeedoMeter({timeElapsed,cpm}) {
   return (
     <div className='text-3xl py-5 flex gap-x-4'>
        <div className="time-elapsed border-r-2 px-5 flex justify-center items-center gap-x-4 text-slate-700">
@@ -8,7 +6,7 @@ export default function SpeedoMeter({characters,startTime,cpm}) {
   <path fillRule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 6a.75.75 0 0 0-1.5 0v6c0 .414.336.75.75.75h4.5a.75.75 0 0 0 0-1.5h-3.75V6Z" clipRule="evenodd" />
 </svg>
 
-{parseInt(startTime? (new Date().getTime() - startTime)/1000: 0)} 
+{timeElapsed} 
        </div>
         
        <div className='flex items-center justify-center gap-x-4 text-slate-700'>
