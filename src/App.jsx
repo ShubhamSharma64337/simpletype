@@ -11,7 +11,6 @@ function App() {
   const [pressed, setPressed] = useState(['NONE']);
   const [characters, setCharacters] = useState(0);
   const [startTime, setStartTime] = useState(null);
-  const [cpm, setCpm] = useState(0);
   const [givenText, setGivenText] = useState('Machine learning, a subset of AI, continues to be a driving force behind many technological innovations. By leveraging vast amounts of data, machine learning algorithms can identify patterns and make predictions with remarkable precision. This capability is harnessed across a myriad of applications, from personalized recommendations on streaming platforms to predictive maintenance in manufacturing. The healthcare sector, in particular, stands to benefit immensely from machine learning. Predictive analytics can aid in early disease detection, personalized treatment plans, and improved patient outcomes. Nevertheless, the integration of machine learning into healthcare also raises concerns about data security, patient privacy, and the need for robust regulatory frameworks.');
   const [typedText, setTypedText] = useState('');
   const [timeElapsed, setTimeElapsed] = useState(0);
@@ -62,13 +61,7 @@ function App() {
     if(pressedCopy.includes(e.key)){
       let ind = pressedCopy.indexOf(e.key);
       pressedCopy.splice(ind,1);
-      
       setCharacters(characters+1);
-      let dtObj = new Date();
-      let curTime = dtObj.getTime();
-      let timeElapsedInSecs = (curTime - startTime)/1000;
-      
-      setCpm(parseInt(characters*60/timeElapsedInSecs));
     }
     setPressed(pressedCopy);
   }
@@ -79,7 +72,6 @@ function App() {
     setTypedText('');
     setPressed(['NONE']);
     setCharacters(0);
-    setCpm(0);
     setTimeout(()=>{
       setTimeElapsed(0);
       setIsLoading(false);
@@ -95,7 +87,7 @@ function App() {
         <Navbar toggleSettingsModal={toggleSettingsModal}></Navbar>
       </div>
       <div className='row-start-3 flex justify-center'>
-       <SpeedoMeter timeElapsed={timeElapsed} cpm={cpm}></SpeedoMeter>
+       <SpeedoMeter typedText={typedText} timeElapsed={timeElapsed}></SpeedoMeter>
       </div>
       <div className='row-start-4 row-span-6 flex justify-center'>
         <TextDisplay givenText={givenText} typedText={typedText} resetEverything={resetEverything}></TextDisplay>
