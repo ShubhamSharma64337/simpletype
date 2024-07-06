@@ -3,6 +3,7 @@ import './App.css'
 import SpeedoMeter from './components/SpeedoMeter'
 import TextDisplay from './components/TextDisplay'
 import Loader from './components/Loader'
+import UnderConstruction from './components/UnderConstruction'
 function App() {
   const [isLoading,setIsLoading] = useState(false);
   const [pressed, setPressed] = useState(['NONE']);
@@ -75,6 +76,7 @@ function App() {
       {/* <Navbar></Navbar> */}
       <SpeedoMeter timeElapsed={timeElapsed} cpm={cpm}></SpeedoMeter>
       <TextDisplay givenText={givenText} typedText={typedText} resetEverything={resetEverything}></TextDisplay>
+      <UnderConstruction></UnderConstruction>
       {/* <Keyboard pressed={pressed}></Keyboard> */}
     </div>
   )
