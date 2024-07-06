@@ -6,11 +6,13 @@ import Loader from './components/Loader'
 import UnderConstruction from './components/UnderConstruction'
 import Navbar from './components/Navbar'
 import Settings from './components/Settings'
+import Alert from './components/Alert'
 function App() {
   const [isLoading,setIsLoading] = useState(false);
   const [pressed, setPressed] = useState(['NONE']);
   const [characters, setCharacters] = useState(0);
   const [startTime, setStartTime] = useState(null);
+  const [alerts, setAlerts] = useState(null);
   const [allTexts, setAllTexts] = useState([
     {title: 'Machine Learning', text: "Machine learning, a subset of AI, continues to be a driving force behind many technological innovations. By leveraging vast amounts of data, machine learning algorithms can identify patterns and make predictions with remarkable precision. This capability is harnessed across a myriad of applications, from personalized recommendations on streaming platforms to predictive maintenance in manufacturing. The healthcare sector, in particular, stands to benefit immensely from machine learning. Predictive analytics can aid in early disease detection, personalized treatment plans, and improved patient outcomes. Nevertheless, the integration of machine learning into healthcare also raises concerns about data security, patient privacy, and the need for robust regulatory frameworks."},
     {title: 'Journaling', text: "Journaling is a powerful tool for self-reflection, personal growth, and mental well-being. It involves the regular practice of writing down thoughts, feelings, experiences, and observations in a structured or freeform manner. The act of journaling serves as a private space for individuals to explore their inner worlds, providing a safe outlet for expressing emotions and processing events. One of the key benefits of journaling is its ability to enhance self-awareness. By consistently documenting one's thoughts and experiences, individuals can gain deeper insights into their patterns of behavior, emotional triggers, and recurring themes in their lives. This heightened self-awareness can lead to greater emotional intelligence, allowing individuals to better understand and manage their emotions, and ultimately fostering healthier relationships with others."},
@@ -22,16 +24,27 @@ function App() {
   const [showSettingsModal, setSettingsModal] = useState(false);
   const [invalidKeys, setInvalidKeys] = useState(['Shift','Control','Alt','CapsLock','Backspace','Tab'])
   const [config, setConfig]  = useState({backspaceAllowed: false});
+
+  function showAlert(message){
+    setAlerts(message)
+    setTimeout(()=>{
+      setAlerts(null);
+    },3000)
+  }
   function nextPara(){
-    resetEverything();
     if(currentTextIndex<allTexts.length-1){
+      resetEverything();
       setCurrentTextIndex(currentTextIndex+1);
+    } else {
+      showAlert('This is the last paragraph')
     }
   }
   function prevPara(){
-    resetEverything();
     if(currentTextIndex>0){
+      resetEverything();
       setCurrentTextIndex(currentTextIndex-1);
+    } else {
+      showAlert('This is the first paragraph!')
     }
   }
   useEffect(()=>{
@@ -99,12 +112,13 @@ function App() {
 
   return (
     <div className='grid grid-rows-10  mx-auto h-screen'>
+      <Alert alerts={alerts}></Alert>
       <Loader isLoading={isLoading}></Loader>
       <div className="">
         <Navbar toggleSettingsModal={toggleSettingsModal}></Navbar>
       </div>
       <div className='row-start-3 flex justify-center'>
-       <TopBar title={allTexts[currentTextIndex].title} prevPara={prevPara} nextPara={nextPara} typedText={typedText} timeElapsed={timeElapsed} resetEverything={resetEverything}></TopBar>
+       <TopBar currentTextIndex={currentTextIndex} title={allTexts[currentTextIndex].title} prevPara={prevPara} nextPara={nextPara} typedText={typedText} timeElapsed={timeElapsed} resetEverything={resetEverything}></TopBar>
       </div>
       <div className='row-start-4 row-span-6 flex justify-center'>
         <TextDisplay givenText={allTexts[currentTextIndex].text} typedText={typedText} resetEverything={resetEverything}></TextDisplay>
