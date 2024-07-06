@@ -2,6 +2,15 @@
     animation: rotate-ring 0.50s linear infinite;
 }
 
+.character{
+    animation: blinkingcursor 0.75s linear infinite;
+}
+
+@keyframes blinkingcursor{
+    0% {--tw-border-opacity: 0}
+    100% {--tw-border-opacity: 1}
+}
+
 @keyframes rotate-ring{
     from {transform: rotate(0turn);}
     to {transform: rotate(1turn);}
