@@ -4,7 +4,7 @@ export default function TextDisplay({givenText,typedText,resetEverything}) {
   let typedArray = typedText.split('');
   let givenArray = givenText.split('');
   return (
-      <div className='text-justify'>
+      <div className='text-justify w-2/3'>
           {givenArray.map((val, ind) => {
               if (val == typedArray[ind] && ind < typedArray.length) { //Characters which are correctly been typed
                   return <span key={ind} className={`${ind === typedArray.length - 1 ? 'border-r-2' : ''} ${typedArray.length === 0 && ind === 0? 'border-l-2' : ''} border-purple-500 text-2xl text-purple-700`}>{val}</span>

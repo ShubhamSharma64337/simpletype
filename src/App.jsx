@@ -4,6 +4,7 @@ import SpeedoMeter from './components/SpeedoMeter'
 import TextDisplay from './components/TextDisplay'
 import Loader from './components/Loader'
 import UnderConstruction from './components/UnderConstruction'
+import Navbar from './components/Navbar'
 function App() {
   const [isLoading,setIsLoading] = useState(false);
   const [pressed, setPressed] = useState(['NONE']);
@@ -71,11 +72,17 @@ function App() {
   window.onkeyup = keyUpHandler;
 
   return (
-    <div className='w-2/3 flex flex-col justify-center items-center mx-auto h-screen'>
+    <div className='grid grid-rows-10  mx-auto h-screen'>
       <Loader isLoading={isLoading}></Loader>
-      {/* <Navbar></Navbar> */}
-      <SpeedoMeter timeElapsed={timeElapsed} cpm={cpm}></SpeedoMeter>
-      <TextDisplay givenText={givenText} typedText={typedText} resetEverything={resetEverything}></TextDisplay>
+      <div className="">
+        <Navbar></Navbar>
+      </div>
+      <div className='row-start-3 flex justify-center'>
+       <SpeedoMeter timeElapsed={timeElapsed} cpm={cpm}></SpeedoMeter>
+      </div>
+      <div className='row-start-4 row-span-6 flex justify-center'>
+        <TextDisplay givenText={givenText} typedText={typedText} resetEverything={resetEverything}></TextDisplay>
+      </div>
       <UnderConstruction></UnderConstruction>
       {/* <Keyboard pressed={pressed}></Keyboard> */}
     </div>
