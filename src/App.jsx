@@ -16,6 +16,8 @@ function App() {
   const [typedText, setTypedText] = useState('');
   const [timeElapsed, setTimeElapsed] = useState(0);
   const [showSettingsModal, setSettingsModal] = useState(false);
+  const [invalidKeys, setInvalidKeys] = useState(['Shift','Control','Alt','CapsLock','Backspace','Tab'])
+  const [config, setConfig]  = useState({backspaceAllowed: false});
   useEffect(()=>{
     setTimeout(()=>{
       if(startTime){
@@ -27,21 +29,28 @@ function App() {
   function toggleSettingsModal(){
     showSettingsModal?setSettingsModal(false):setSettingsModal(true);
   }
+
   function keyDownHandler(e){
     e.preventDefault();
-    if(e.key === 'Backspace' && startTime && typedText.length>0){
-      let typedTextCopy = typedText.slice(0,typedText.length-1);
-      setTypedText(typedTextCopy);
-    }
-    if(!(['Shift','Control','Alt','CapsLock','Backspace','Tab'].includes(e.key))){
-      let typedTextCopy = typedText + e.key;
-      setTypedText(typedTextCopy);
-    }
-    if(!startTime && !(['Shift','Control','Alt','CapsLock','Backspace','Tab'].includes(e.key))){
+    
+    if(!startTime && !(invalidKeys.includes(e.key))){ //Starting the timer
       let dtObj = new Date();
       setStartTime(dtObj.getTime());
     }
-    let pressedCopy = [...pressed];
+
+
+    if(invalidKeys.includes(e.key)){
+      if(e.key === 'Backspace' && config.backspaceAllowed && startTime && typedText.length>0){
+        let typedTextCopy = typedText.slice(0,typedText.length-1);
+        setTypedText(typedTextCopy);
+      }
+    } else {
+        let typedTextCopy = typedText + e.key;
+        setTypedText(typedTextCopy);
+    }
+
+
+    let pressedCopy = [...pressed]; //This is for showing on virtual keyboard
     if(!pressedCopy.includes(e.key)){
       pressedCopy.push(e.key);
     }
@@ -49,7 +58,7 @@ function App() {
   }
 
   function keyUpHandler(e){
-    let pressedCopy = [...pressed];
+    let pressedCopy = [...pressed]; //This is for showing on virtual keyboard
     if(pressedCopy.includes(e.key)){
       let ind = pressedCopy.indexOf(e.key);
       pressedCopy.splice(ind,1);
@@ -93,7 +102,7 @@ function App() {
       </div>
       <UnderConstruction></UnderConstruction>
       {/* <Keyboard pressed={pressed}></Keyboard> */}
-      <Settings visible={showSettingsModal} toggleVisible={toggleSettingsModal}></Settings>
+      <Settings config={config} setConfig={setConfig} visible={showSettingsModal} toggleVisible={toggleSettingsModal}></Settings>
     </div>
   )
 }
