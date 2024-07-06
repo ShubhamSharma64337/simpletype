@@ -1,0 +1,8 @@
+.loader-ring{
+    animation: rotate-ring 0.50s linear infinite;
+}
+
+@keyframes rotate-ring{
+    from {transform: rotate(0turn);}
+    to {transform: rotate(1turn);}
+}

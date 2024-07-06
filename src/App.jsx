@@ -2,8 +2,9 @@ import { useState,useEffect } from 'react'
 import './App.css'
 import SpeedoMeter from './components/SpeedoMeter'
 import TextDisplay from './components/TextDisplay'
-
+import Loader from './components/Loader'
 function App() {
+  const [isLoading,setIsLoading] = useState(false);
   const [pressed, setPressed] = useState(['NONE']);
   const [characters, setCharacters] = useState(0);
   const [startTime, setStartTime] = useState(null);
@@ -54,6 +55,7 @@ function App() {
   }
 
   function resetEverything(){
+    setIsLoading(true);
     setStartTime(null);
     setTypedText('');
     setPressed(['NONE']);
@@ -61,6 +63,7 @@ function App() {
     setCpm(0);
     setTimeout(()=>{
       setTimeElapsed(0);
+      setIsLoading(false);
     },1000)
   }
   window.onkeydown = keyDownHandler;
@@ -68,6 +71,7 @@ function App() {
 
   return (
     <div className='w-2/3 flex flex-col justify-center items-center mx-auto h-screen'>
+      <Loader isLoading={isLoading}></Loader>
       {/* <Navbar></Navbar> */}
       <SpeedoMeter timeElapsed={timeElapsed} cpm={cpm}></SpeedoMeter>
       <TextDisplay givenText={givenText} typedText={typedText} resetEverything={resetEverything}></TextDisplay>
