@@ -1,6 +1,6 @@
 import { useState,useEffect } from 'react'
 import './App.css'
-import SpeedoMeter from './components/SpeedoMeter'
+import TopBar from './components/TopBar'
 import TextDisplay from './components/TextDisplay'
 import Loader from './components/Loader'
 import UnderConstruction from './components/UnderConstruction'
@@ -104,7 +104,7 @@ function App() {
         <Navbar toggleSettingsModal={toggleSettingsModal}></Navbar>
       </div>
       <div className='row-start-3 flex justify-center'>
-       <SpeedoMeter title={allTexts[currentTextIndex].title} prevPara={prevPara} nextPara={nextPara} typedText={typedText} timeElapsed={timeElapsed} resetEverything={resetEverything}></SpeedoMeter>
+       <TopBar title={allTexts[currentTextIndex].title} prevPara={prevPara} nextPara={nextPara} typedText={typedText} timeElapsed={timeElapsed} resetEverything={resetEverything}></TopBar>
       </div>
       <div className='row-start-4 row-span-6 flex justify-center'>
         <TextDisplay givenText={allTexts[currentTextIndex].text} typedText={typedText} resetEverything={resetEverything}></TextDisplay>
