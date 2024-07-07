@@ -51,6 +51,7 @@ function App() {
   }
 
   useEffect(()=>{
+    //The below code generates and stores the results and resets everything
     if(typedText.length >= allTexts[currentTextIndex].text.length){
       let grossSpeed = parseInt(typedText.split(' ').length*60/timeElapsed);
       let newResult = null;

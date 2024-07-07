@@ -20,7 +20,7 @@ export default function Results({results}) {
                                 <td>{index+1}.</td>
                                 <td>{parseInt(val.gross)}</td>
                                 <td>{parseInt(val.net)}</td>
-                                <td>{val.timeTaken}</td>
+                                <td>{val.timeTaken < 60 ? val.timeTaken : parseInt(val.timeTaken/60) + 'm ' + parseInt(val.timeTaken%60) + ' s'}</td>
                             </tr>
                     }) : <tr>
                         <td colSpan={4} align='center'>No Scores Yet</td>
