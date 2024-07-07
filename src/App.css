@@ -1,10 +1,10 @@
 .loader-ring{
     animation: rotate-ring 0.50s linear infinite;
 }
-
+/* 
 .character{
     animation: blinkingcursor 0.75s linear infinite;
-}
+} */
 
 @keyframes blinkingcursor{
     0% {--tw-border-opacity: 0}

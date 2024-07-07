@@ -4,7 +4,7 @@ export default function TextDisplay({givenText,typedText,resetEverything}) {
   let typedArray = typedText.split('');
   let givenArray = givenText.split('');
   return (
-      <div className='text-justify w-4/5 sm:w-3/5 text-base sm:text-lg md:text-xl lg:text-2xl h-full overflow-y-auto'>
+      <div className='text-justify w-4/5 sm:w-3/5 text-base sm:text-lg md:text-xl lg:text-2xl h-full overflow-y-auto p-1'>
           {givenArray.map((val, ind) => {
               if (val == typedArray[ind] && ind < typedArray.length) { //Characters which are correctly been typed
                 //spans cannot be used dur to certain problems with them, so we will use divs with inline display to animate the cursor border properly
