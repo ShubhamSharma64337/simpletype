@@ -1,8 +1,8 @@
 import React from 'react'
 
-export default function Results({results}) {
+export default function ResultsSidebar({results}) {
   return (
-    <div className='bg-white hover:scale-110 transition border border-purple-500 rounded p-5 text-xl text-slate-700'>
+    <div className='bg-white hover:scale-110 transition border border-purple-500 rounded p-5 text-xl text-slate-700 h-4/5 overflow-y-auto'>
         <div className='text-center'>Scorecard</div>
         <table cellPadding={10} cellSpacing={2}>
             <thead className='font-medium'>

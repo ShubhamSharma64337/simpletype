@@ -7,7 +7,8 @@ import UnderConstruction from './components/UnderConstruction'
 import Navbar from './components/Navbar'
 import Settings from './components/Settings'
 import Alert from './components/Alert'
-import Results from './components/Results'
+import ResultsSidebar from './components/ResultsSidebar'
+import ResultsModal from './components/ResultsModal'
 function App() {
   const [isLoading,setIsLoading] = useState(false);
   const [pressed, setPressed] = useState(['NONE']);
@@ -24,6 +25,7 @@ function App() {
   const [typedText, setTypedText] = useState('');
   const [timeElapsed, setTimeElapsed] = useState(0);
   const [showSettingsModal, setSettingsModal] = useState(false);
+  const [showResultsModal, setResultsModal] = useState(false);
   const [invalidKeys, setInvalidKeys] = useState(['Shift','Control','Alt','CapsLock','Backspace','Tab'])
   const [config, setConfig]  = useState({backspaceAllowed: false});
   const [results, setResults] = useState(null);
@@ -65,7 +67,7 @@ function App() {
       }
       setResults(newResult)
       resetEverything();
-      
+      showAlert('Score Saved');
     }
   },[typedText])
 
@@ -110,6 +112,9 @@ function App() {
 
   function toggleSettingsModal(){
     showSettingsModal?setSettingsModal(false):setSettingsModal(true);
+  }
+  function toggleResultsModal(){
+    showResultsModal?setResultsModal(false):setResultsModal(true);
   }
 
   function keyDownHandler(e){
@@ -164,7 +169,7 @@ function App() {
       <Alert alerts={alerts}></Alert>
       <Loader isLoading={isLoading}></Loader>
       <div className="col-span-4">
-        <Navbar toggleSettingsModal={toggleSettingsModal}></Navbar>
+        <Navbar toggleSettingsModal={toggleSettingsModal} toggleResultsModal={toggleResultsModal}></Navbar>
       </div>
       <div className='col-span-4 flex lg:col-span-3 justify-center'>
        <TopBar currentTextIndex={currentTextIndex} title={allTexts[currentTextIndex].title} prevPara={prevPara} nextPara={nextPara} typedText={typedText} timeElapsed={timeElapsed} resetEverything={resetEverything}></TopBar>
@@ -173,12 +178,13 @@ function App() {
         <TextDisplay givenText={allTexts[currentTextIndex].text} typedText={typedText} resetEverything={resetEverything}></TextDisplay>
       </div>
       <div className='col-start-4 row-start-2 row-span-9 justify-center items-center hidden lg:flex'>
-        <Results results={results}></Results>
+        <ResultsSidebar results={results}></ResultsSidebar>
       </div>
       
       <UnderConstruction></UnderConstruction>
       {/* <Keyboard pressed={pressed}></Keyboard> */}
       <Settings config={config} setConfig={setConfig} visible={showSettingsModal} toggleVisible={toggleSettingsModal}></Settings>
+      <ResultsModal visible={showResultsModal} toggleVisible={toggleResultsModal} results={results}></ResultsModal>
     </div>
   )
 }
