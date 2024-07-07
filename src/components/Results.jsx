@@ -6,18 +6,20 @@ export default function Results({results}) {
         <div className='text-center'>Scorecard</div>
         <table cellPadding={10} cellSpacing={2}>
             <thead className='font-medium'>
+                <tr>
                 <th>S.No</th>
                 <th>Gross</th>
                 <th>Net</th>
                 <th>Time</th>
+                </tr>
             </thead>
             <tbody>
                 {
                     results ? results.map((val,index)=>{
                         return <tr key={index}>
                                 <td>{index+1}.</td>
-                                <td>{val.gross}</td>
-                                <td>{val.net}</td>
+                                <td>{parseInt(val.gross)}</td>
+                                <td>{parseInt(val.net)}</td>
                                 <td>{val.timeTaken}</td>
                             </tr>
                     }) : <tr>
