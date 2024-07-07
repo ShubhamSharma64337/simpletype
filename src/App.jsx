@@ -17,7 +17,7 @@ function App() {
   const [alerts, setAlerts] = useState(null);
   const [allTexts, setAllTexts] = useState([
     {title: 'Demo', text: "One of you must come here"},
-    {title: 'Machine Learning', text: "Machine learning, a subset of AI, continues to be a driving force behind many technological innovations. By leveraging vast amounts of data, machine learning algorithms can identify patterns and make predictions with remarkable precision. This capability is harnessed across a myriad of applications, from personalized recommendations on streaming platforms to predictive maintenance in manufacturing. The healthcare sector, in particular, stands to benefit immensely from machine learning. Predictive analytics can aid in early disease detection, personalized treatment plans, and improved patient outcomes. Nevertheless, the integration of machine learning into healthcare also raises concerns about data security, patient privacy, and the need for robust regulatory frameworks."},
+    {title: 'Machine Learning', text: "Machine learning, a subset of AI, continues to be a driving force behind many technological innovations. By leveraging vast amounts of data, machine learning algorithms can identify patterns and make predictions with remarkable precision. This capability is harnessed across a myriad of applications, from personalized recommendations on streaming platforms to predictive maintenance in manufacturing. The healthcare sector, in particular, stands to benefit immensely from machine learning. Predictive analytics can aid in early disease detection, personalized treatment plans, and improved patient outcomes. Nevertheless, the integration of machine learning into healthcare also raises concerns about data security, patient privacy, and the need for robust regulatory frameworks.Machine learning, a subset of AI, continues to be a driving force behind many technological innovations. By leveraging vast amounts of data, machine learning algorithms can identify patterns and make predictions with remarkable precision. This capability is harnessed across a myriad of applications, from personalized recommendations on streaming platforms to predictive maintenance in manufacturing. The healthcare sector, in particular, stands to benefit immensely from machine learning. Predictive analytics can aid in early disease detection, personalized treatment plans, and improved patient outcomes. Nevertheless, the integration of machine learning into healthcare also raises concerns about data security, patient privacy, and the need for robust regulatory frameworks."},
     {title: 'Journaling', text: "Journaling is a powerful tool for self-reflection, personal growth, and mental well-being. It involves the regular practice of writing down thoughts, feelings, experiences, and observations in a structured or freeform manner. The act of journaling serves as a private space for individuals to explore their inner worlds, providing a safe outlet for expressing emotions and processing events. One of the key benefits of journaling is its ability to enhance self-awareness. By consistently documenting one's thoughts and experiences, individuals can gain deeper insights into their patterns of behavior, emotional triggers, and recurring themes in their lives. This heightened self-awareness can lead to greater emotional intelligence, allowing individuals to better understand and manage their emotions, and ultimately fostering healthier relationships with others."},
     {title: 'Evolution', text: "Evolution is a fundamental concept in biology that explains the diversity of life on Earth. It is the process by which species of organisms change over time through variations in their genetic makeup, often driven by natural selection, mutation, genetic drift, and gene flow. The theory of evolution, first comprehensively formulated by Charles Darwin in the 19th century, posits that all species of organisms arise and develop through the natural selection of small, inherited variations that increase the individual's ability to compete, survive, and reproduce."}
   ])
@@ -76,8 +76,7 @@ function App() {
     let tInd = 0;
     let wc = 0;
     console.log(tText)
-    tText = tText.replace(/\s+/g," ") //To avoid splitting string into spaces
-    console.log(tText)
+    tText = tText.replace(/\s+/g," ") //To avoid splitting string into spaces    
     while(gInd < gText.split(' ').length && tInd < tText.split(' ').length){
       if(tText.split(' ')[tInd] === gText.split(' ')[gInd]){ //If words match
         wc++;
@@ -86,7 +85,7 @@ function App() {
       } else {
         let tLen = tText.split(' ')[tInd].length;
         if(tLen > gText.split(' ')[gInd].length){
-          while(tLen > gText.split(' ')[gInd].length && gInd < gText.split(' ').length){
+          while(gInd < gText.split(' ').length && tLen > gText.split(' ')[gInd].length){
             tLen -= gText.split(' ')[gInd].length;
             gInd+=1;
           }
@@ -174,7 +173,7 @@ function App() {
       <div className='col-span-4 flex lg:col-span-3 justify-center'>
        <TopBar currentTextIndex={currentTextIndex} title={allTexts[currentTextIndex].title} prevPara={prevPara} nextPara={nextPara} typedText={typedText} timeElapsed={timeElapsed} resetEverything={resetEverything}></TopBar>
       </div>
-      <div className='col-span-4 lg:col-span-3 flex justify-center'>
+      <div className='col-span-4 lg:col-span-3 flex row-span-5 justify-center'>
         <TextDisplay givenText={allTexts[currentTextIndex].text} typedText={typedText} resetEverything={resetEverything}></TextDisplay>
       </div>
       <div className='col-start-4 row-start-2 row-span-9 justify-center items-center hidden lg:flex'>
