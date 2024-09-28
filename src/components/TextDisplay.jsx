@@ -1,8 +1,8 @@
 import React from 'react'
 
-export default function TextDisplay({givenText,typedText,resetEverything}) {
-  let typedArray = typedText.split('');
-  let givenArray = givenText.split('');
+export default function TextDisplay({givenText,typedText,chunkIndex,chunkSize,resetEverything}) {
+  let typedArray = typedText.split('').slice(chunkIndex*chunkSize,chunkIndex*chunkSize+chunkSize);
+  let givenArray = givenText.split('').slice(chunkIndex*chunkSize,chunkIndex*chunkSize+chunkSize);;
   return (
       <div className='text-justify w-4/5 sm:w-3/5 text-base sm:text-lg md:text-xl lg:text-2xl h-full overflow-y-auto p-1'>
           {givenArray.map((val, ind) => {

@@ -15,6 +15,8 @@ function App() {
   const [characters, setCharacters] = useState(0);
   const [startTime, setStartTime] = useState(null);
   const [alerts, setAlerts] = useState(null);
+  const [chunkIndex, setChunkIndex] = useState(0); //This is used to split the text into multiple chunks to implement an imitation of autoscroll
+  const [chunkSize, setChunkSize] = useState(400); //This decides the size of each chunk
   const [allTexts, setAllTexts] = useState([
     {title: 'Demo', text: "One of you must come here"},
     {title: 'Machine Learning', text: "Machine learning, a subset of AI, continues to be a driving force behind many technological innovations. By leveraging vast amounts of data, machine learning algorithms can identify patterns and make predictions with remarkable precision. This capability is harnessed across a myriad of applications, from personalized recommendations on streaming platforms to predictive maintenance in manufacturing. The healthcare sector, in particular, stands to benefit immensely from machine learning. Predictive analytics can aid in early disease detection, personalized treatment plans, and improved patient outcomes. Nevertheless, the integration of machine learning into healthcare also raises concerns about data security, patient privacy, and the need for robust regulatory frameworks.Machine learning, a subset of AI, continues to be a driving force behind many technological innovations. By leveraging vast amounts of data, machine learning algorithms can identify patterns and make predictions with remarkable precision. This capability is harnessed across a myriad of applications, from personalized recommendations on streaming platforms to predictive maintenance in manufacturing. The healthcare sector, in particular, stands to benefit immensely from machine learning. Predictive analytics can aid in early disease detection, personalized treatment plans, and improved patient outcomes. Nevertheless, the integration of machine learning into healthcare also raises concerns about data security, patient privacy, and the need for robust regulatory frameworks."},
@@ -150,6 +152,9 @@ function App() {
       pressedCopy.splice(ind,1);
       setCharacters(characters+1);
     }
+    if(typedText.slice(chunkIndex*chunkSize,chunkIndex*chunkSize+chunkSize).length >= chunkSize){
+      setChunkIndex(chunkIndex+1);
+    }
     setPressed(pressedCopy);
   }
 
@@ -159,6 +164,7 @@ function App() {
     setPressed(['NONE']);
     setCharacters(0);
     setTimeElapsed(0);
+    setChunkIndex(0); 
   }
   window.onkeydown = keyDownHandler;
   window.onkeyup = keyUpHandler;
@@ -174,7 +180,7 @@ function App() {
        <TopBar currentTextIndex={currentTextIndex} title={allTexts[currentTextIndex].title} prevPara={prevPara} nextPara={nextPara} typedText={typedText} timeElapsed={timeElapsed} resetEverything={resetEverything}></TopBar>
       </div>
       <div className='col-span-4 lg:col-span-3 flex row-span-5 justify-center'>
-        <TextDisplay givenText={allTexts[currentTextIndex].text} typedText={typedText} resetEverything={resetEverything}></TextDisplay>
+        <TextDisplay givenText={allTexts[currentTextIndex].text} chunkIndex={chunkIndex} chunkSize={chunkSize} typedText={typedText} resetEverything={resetEverything}></TextDisplay>
       </div>
       <div className='col-start-4 row-start-2 row-span-9 justify-center items-center hidden lg:flex'>
         <ResultsSidebar results={results}></ResultsSidebar>
