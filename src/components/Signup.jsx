@@ -35,7 +35,7 @@ export default function Signup({setIsLoading,showAlert}) {
   }
   return (
     <div className='flex justify-center col-span-4 row-span-9 items-center'>
-        <form id={'signupForm'} className='flex flex-col gap-y-5 border px-10 py-8 h-min'>
+        <form id={'signupForm'} className='flex flex-col gap-y-5 border p-10 text-xl h-min'>
             <div className='input-group border-b'>
                 <input type='text' placeholder='Email' id='emailInput' required={true} className='px-3 py-2 outline-none'></input>
             </div>
@@ -46,7 +46,7 @@ export default function Signup({setIsLoading,showAlert}) {
                 <input type='password' placeholder='Re-enter Password' id='confirmPasswordInput' required={true} className='px-3 py-2 outline-none'></input>
             </div>
             <div className='input-group my-4'>
-                <div className='bg-purple-200 rounded px-3 py-2 text-center hover:cursor-pointer' onClick={trySignup}>Sign Up</div>
+                <div className='bg-purple-100 rounded px-3 py-2 text-lg transition-colors hover:bg-purple-200 text-center text-slate-800 hover:cursor-pointer' onClick={trySignup}>Sign Up</div>
             </div>
               <div className='input-group text-sm text-slate-400 flex gap-x-2 items-center justify-center'>
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">

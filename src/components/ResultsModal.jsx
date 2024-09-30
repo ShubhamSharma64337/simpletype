@@ -39,7 +39,7 @@ export default function ResultsModal({visible, toggleVisible,results}) {
                                 <td>{val.dtime}</td>
                             </tr>
                     }) : <tr>
-                        <td colSpan={4} align='center'>No Scores Yet</td>
+                        <td colSpan={6} align='center'>No Scores Yet</td>
                     </tr>
                 }
             </tbody>
