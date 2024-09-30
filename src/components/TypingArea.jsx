@@ -51,7 +51,7 @@ export default function TypingArea({results, getResults, setResults, showAlert, 
   const [typedText, setTypedText] = useState('');
   const [timeElapsed, setTimeElapsed] = useState(0);
   const [invalidKeys, setInvalidKeys] = useState(['Shift','Control','Alt','CapsLock','Backspace','Tab'])
-  async function syncResults(res) {
+  async function uploadResult(res) {
     setIsLoading(true);
     try {
       const response = await fetch('http://localhost:3000/users/addresult', {
@@ -107,7 +107,7 @@ export default function TypingArea({results, getResults, setResults, showAlert, 
         newResult = [...results,{gross: grossSpeed, net: netSpeed, timeTaken: timeElapsed, title: allTexts[currentTextIndex].title}]
       }
       if(userInfo.isAuth){
-        syncResults({gross: grossSpeed, net: netSpeed, timeTaken: timeElapsed, title: allTexts[currentTextIndex].title})
+        uploadResult({gross: grossSpeed, net: netSpeed, timeTaken: timeElapsed, title: allTexts[currentTextIndex].title})
         .then(()=>{
           getResults()
         }

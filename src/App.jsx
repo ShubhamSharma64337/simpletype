@@ -34,15 +34,20 @@ function App() {
     ).then((response) => response.json())
       .then((data) => {
         if (data.success) {
-          let updatedResults = new Array();
-          data.message.map((val,ind)=>{
-            updatedResults.push({gross: val.gross, net: val.net, timeTaken: val.timeTaken, title: val.title, dtime: val.dtime});
-          })
-          setResults(updatedResults.map((val)=>{
-            return {gross: val.gross, net: val.net, timeTaken: val.timeTaken, title: val.title, dtime: val.dtime}
-          }))
+          if(data.payload){ //If user has some saved results
+            let updatedResults = new Array();
+            data.payload.map((val,ind)=>{
+              updatedResults.push({gross: val.gross, net: val.net, timeTaken: val.timeTaken, title: val.title, dtime: val.dtime});
+            })
+            setResults(updatedResults.map((val)=>{
+              return {gross: val.gross, net: val.net, timeTaken: val.timeTaken, title: val.title, dtime: val.dtime}
+            }))
+          } else {
+            setResults(null);
+          }
           setIsLoading(false);
         } else {
+          showAlert("Could not retrieve results!");
           setIsLoading(false);
         }
       }
