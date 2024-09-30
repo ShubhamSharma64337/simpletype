@@ -2,7 +2,7 @@ import React from 'react'
 import { Outlet, Link } from "react-router-dom";
 
 
-export default function Navbar({ toggleSettingsModal,showAlert,setIsLoading, toggleResultsModal,authStatus, setAuthStatus }) {
+export default function Navbar({ toggleSettingsModal,showAlert,setIsLoading, toggleResultsModal,userInfo, setUserInfo }) {
   async function tryLogout(){
     setIsLoading(true);
     const response = await fetch("http://localhost:3000/users/logout",{
@@ -12,7 +12,7 @@ export default function Navbar({ toggleSettingsModal,showAlert,setIsLoading, tog
   ).then((response)=>response.json())
   .then((data)=>{
     if(data.success){
-      setAuthStatus(false);
+      setUserInfo(false);
       setIsLoading(false);
       showAlert("Successfully logged out");
     }else{
@@ -32,16 +32,16 @@ export default function Navbar({ toggleSettingsModal,showAlert,setIsLoading, tog
         <div className="right flex justify-center items-center">
           <div className="nav-links">
             <ul className='flex justify-center items-center gap-x-2'>
-              <li className={`${authStatus.isAuth?'hidden':''}`}>
+              <li className={`${userInfo.isAuth?'hidden':''}`}>
                 <Link className='px-3 py-2 bg-purple-100 rounded text-sm font-medium hover:bg-purple-200 transition-colors' to={'/login'}>Login</Link>
               </li>
-              <li className={`${authStatus.isAuth?'hidden':''}`}>
+              <li className={`${userInfo.isAuth?'hidden':''}`}>
                 <Link className='px-3 py-2 bg-purple-100 rounded text-sm font-medium hover:bg-purple-200 transition-colors' to={'/signup'}>Signup</Link>
               </li>
-              <li className={`${authStatus.isAuth?'':'hidden'}`}>
-                <div className='px-3 py-2text-sm font-medium'>{authStatus.email}</div>
+              <li className={`${userInfo.isAuth?'':'hidden'}`}>
+                <div className='px-3 py-2text-sm font-medium'>{userInfo.email}</div>
               </li>
-              <li className={`${authStatus.isAuth?'':'hidden'}`}>
+              <li className={`${userInfo.isAuth?'':'hidden'}`}>
                 <button className='px-3 py-2 bg-purple-100 rounded text-sm font-medium hover:bg-purple-200 transition-colors' onClick={tryLogout}>Logout</button>
               </li>
               <li>

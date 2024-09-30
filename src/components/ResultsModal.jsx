@@ -3,7 +3,7 @@ import React from 'react'
 export default function ResultsModal({visible, toggleVisible,results}) {
 
   return (
-    visible && <div className='overlay flex justify-center items-center bg-white bg-opacity-50 absolute h-screen w-screen top-0 left-0 text-xl'>
+    visible && <div className='overlay flex justify-center items-start py-5 bg-white bg-opacity-50 absolute h-screen overflow-y-auto w-screen top-0 left-0 text-xl'>
                     <div className='bg-white transition border shadow rounded p-5 text-xl text-slate-700'>
         <div className="modal-header flex justify-between items-center">
         <div className='text-center'>Scorecard</div>
@@ -20,9 +20,11 @@ export default function ResultsModal({visible, toggleVisible,results}) {
             <thead className='font-medium'>
                 <tr>
                 <th>S.No</th>
+                <th>Title</th>
                 <th>Gross</th>
                 <th>Net</th>
                 <th>Time</th>
+                <th>Test Date/Time</th>
                 </tr>
             </thead>
             <tbody>
@@ -30,9 +32,11 @@ export default function ResultsModal({visible, toggleVisible,results}) {
                     results ? results.map((val,index)=>{
                         return <tr key={index}>
                                 <td>{index+1}.</td>
+                                <td>{val.title}</td>
                                 <td>{parseInt(val.gross)}</td>
                                 <td>{parseInt(val.net)}</td>
                                 <td>{val.timeTaken < 60 ? val.timeTaken : parseInt(val.timeTaken/60) + 'm ' + parseInt(val.timeTaken%60) + ' s'}</td>
+                                <td>{val.dtime}</td>
                             </tr>
                     }) : <tr>
                         <td colSpan={4} align='center'>No Scores Yet</td>

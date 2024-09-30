@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import TopBar from './TopBar'
 import TextDisplay from './TextDisplay'
 
-export default function TypingArea({results, setResults, showAlert, config}) {
+export default function TypingArea({results, getResults, setResults, showAlert, config, setIsLoading, userInfo}) {
   const [pressed, setPressed] = useState(['NONE']);
   const [characters, setCharacters] = useState(0);
   const [startTime, setStartTime] = useState(null);
@@ -51,6 +51,31 @@ export default function TypingArea({results, setResults, showAlert, config}) {
   const [typedText, setTypedText] = useState('');
   const [timeElapsed, setTimeElapsed] = useState(0);
   const [invalidKeys, setInvalidKeys] = useState(['Shift','Control','Alt','CapsLock','Backspace','Tab'])
+  async function syncResults(res) {
+    setIsLoading(true);
+    try {
+      const response = await fetch('http://localhost:3000/users/addresult', {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include"
+        ,
+        body: JSON.stringify(res)
+      }).then((response) => response.json())
+        .then((data) => {
+          setIsLoading(false);
+          showAlert(data.message)
+          if (data.success) {
+            showAlert("Results Synchronized");
+          }
+        });
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+
   function nextPara(){
     if(currentTextIndex<allTexts.length-1){
       resetEverything();
@@ -77,11 +102,19 @@ export default function TypingArea({results, setResults, showAlert, config}) {
       console.log(correctWords);
       let netSpeed = correctWords*60/timeElapsed
       if(results === null){
-        newResult = [{gross: grossSpeed, net: netSpeed, timeTaken: timeElapsed}]
+        newResult = [{gross: grossSpeed, net: netSpeed, timeTaken: timeElapsed, title: allTexts[currentTextIndex].title}]
       } else {
-        newResult = [...results,{gross: grossSpeed, net: netSpeed, timeTaken: timeElapsed}]
+        newResult = [...results,{gross: grossSpeed, net: netSpeed, timeTaken: timeElapsed, title: allTexts[currentTextIndex].title}]
       }
-      setResults(newResult)
+      if(userInfo.isAuth){
+        syncResults({gross: grossSpeed, net: netSpeed, timeTaken: timeElapsed, title: allTexts[currentTextIndex].title})
+        .then(()=>{
+          getResults()
+        }
+        )
+      }else{
+        setResults(newResult);
+      }
       resetEverything();
       showAlert('Score Saved');
     }

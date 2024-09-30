@@ -17,13 +17,37 @@ import Login from './components/Login'
 import Signup from './components/Signup'
 
 function App() {
-  const [authStatus, setAuthStatus] = useState({isAuth: false, email: null});
+  const [userInfo, setUserInfo] = useState({isAuth: false, email: null});
   const [isLoading,setIsLoading] = useState(false);
   const [alerts, setAlerts] = useState(null);
   const [showSettingsModal, setSettingsModal] = useState(false);
   const [showResultsModal, setResultsModal] = useState(false);
   const [config, setConfig]  = useState({backspaceAllowed: false});
   const [results, setResults] = useState(null);
+
+  async function getResults() {
+    setIsLoading(true);
+    const response = await fetch("http://localhost:3000/users/getresults", {
+      method: 'GET',
+      credentials: 'include'
+    }
+    ).then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          let updatedResults = new Array();
+          data.message.map((val,ind)=>{
+            updatedResults.push({gross: val.gross, net: val.net, timeTaken: val.timeTaken, title: val.title, dtime: val.dtime});
+          })
+          setResults(updatedResults.map((val)=>{
+            return {gross: val.gross, net: val.net, timeTaken: val.timeTaken, title: val.title, dtime: val.dtime}
+          }))
+          setIsLoading(false);
+        } else {
+          setIsLoading(false);
+        }
+      }
+      )
+  }
 
   function showAlert(message){
     setAlerts(message)
@@ -48,7 +72,7 @@ function App() {
   ).then((response)=>response.json())
   .then((data)=>{
     if(data.success){
-      setAuthStatus({...authStatus, isAuth: true, email: data.message});
+      setUserInfo({...userInfo, isAuth: true, email: data.message});
       setIsLoading(false);
     }else{
       setIsLoading(false);
@@ -60,17 +84,25 @@ function App() {
     checkLogin();
   },[])
 
+  useEffect(()=>{
+    if(userInfo.isAuth){
+      getResults();
+    }else{
+      setResults(null);
+    }
+  },[userInfo])
+
   return (
     <div className='grid grid-cols-4 grid-rows-10  mx-auto h-screen'>
       <Alert alerts={alerts}></Alert>
       <Loader isLoading={isLoading}></Loader>
         <BrowserRouter basename={process.env.NODE_ENV === 'production'?'/simpletype':undefined}>
           <div className="col-span-4 row-span-1">
-            <Navbar showAlert={showAlert} toggleSettingsModal={toggleSettingsModal} toggleResultsModal={toggleResultsModal} setIsLoading={setIsLoading} authStatus={authStatus} setAuthStatus={setAuthStatus}></Navbar>
+            <Navbar showAlert={showAlert} toggleSettingsModal={toggleSettingsModal} toggleResultsModal={toggleResultsModal} setIsLoading={setIsLoading} userInfo={userInfo} setUserInfo={setUserInfo}></Navbar>
           </div>
           <Routes>
-            <Route path="/" element={<TypingArea results={results} setResults={setResults} showAlert={showAlert} config={config}/>} />
-            <Route path="/login" element={<Login setIsLoading={setIsLoading} showAlert={showAlert} setAuthStatus={setAuthStatus}/>} />
+            <Route path="/" element={<TypingArea getResults={getResults} results={results} setResults={setResults} showAlert={showAlert} config={config} setIsLoading={setIsLoading} userInfo={userInfo}/>} />
+            <Route path="/login" element={<Login setIsLoading={setIsLoading} showAlert={showAlert} setUserInfo={setUserInfo}/>} />
             <Route path="/signup" element={<Signup setIsLoading={setIsLoading} showAlert={showAlert}/>} />
           </Routes>
         </BrowserRouter>

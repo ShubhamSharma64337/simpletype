@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 
-export default function Login({setIsLoading,showAlert,setAuthStatus}) {
+export default function Login({setIsLoading,showAlert,setUserInfo}) {
     const navigate = useNavigate();
     async function tryLogin(){
         if(!document.querySelector('#signinForm').checkValidity()){
@@ -23,7 +23,7 @@ export default function Login({setIsLoading,showAlert,setAuthStatus}) {
                     setIsLoading(false);
                     showAlert(data.message)
                     if(data.success){
-                        setAuthStatus({isAuth: true, email: data.message});
+                        setUserInfo({isAuth: true, email: data.message});
                         navigate('/');
                     }
             });

@@ -7,7 +7,7 @@ export default function Settings({config,setConfig,visible,toggleVisible}) {
         setConfig({...config, [name]:checked})
     }
   return (
-    visible && <div className='overlay flex justify-center items-center bg-white bg-opacity-50 absolute h-screen w-screen top-0 left-0 text-xl'>
+    visible && <div className='overlay flex justify-center items-start py-5 bg-white bg-opacity-50 absolute h-screen w-screen top-0 left-0 text-xl'>
         <div className="modal bg-white shadow border rounded p-5 w-4/5 sm:w-3/5 md:w-2/5">
             <div className="modal-header flex justify-between items-center mb-5">
                 <div className="font-bold">
