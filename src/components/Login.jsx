@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 
-export default function Login({setIsLoading,showAlert}) {
+export default function Login({setIsLoading,showAlert,setAuthStatus}) {
     const navigate = useNavigate();
     async function tryLogin(){
         if(!document.querySelector('#signinForm').checkValidity()){
@@ -13,14 +13,17 @@ export default function Login({setIsLoading,showAlert}) {
             const response = await fetch('http://localhost:3000/login',{
                 method: 'POST',
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
                 },
+                credentials: "include"
+                ,
                 body: JSON.stringify({email: document.querySelector('#emailInput').value, password: document.querySelector('#passwordInput').value})
             }).then((response)=> response.json() )
             .then((data)=>{
                     setIsLoading(false);
                     showAlert(data.message)
                     if(data.success){
+                        setAuthStatus({isAuth: true, email: data.message});
                         navigate('/');
                     }
             });

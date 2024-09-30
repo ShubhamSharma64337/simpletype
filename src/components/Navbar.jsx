@@ -2,7 +2,26 @@ import React from 'react'
 import { Outlet, Link } from "react-router-dom";
 
 
-export default function Navbar({ toggleSettingsModal, toggleResultsModal }) {
+export default function Navbar({ toggleSettingsModal,showAlert,setIsLoading, toggleResultsModal,authStatus, setAuthStatus }) {
+  async function tryLogout(){
+    setIsLoading(true);
+    const response = await fetch("http://localhost:3000/users/logout",{
+      method: 'GET',
+      credentials: 'include'
+    }
+  ).then((response)=>response.json())
+  .then((data)=>{
+    if(data.success){
+      setAuthStatus(false);
+      setIsLoading(false);
+      showAlert("Successfully logged out");
+    }else{
+      setIsLoading(false);
+      showAlert("Could not log out"); 
+    }
+  })
+
+  }
   return (
     <div className='p-3 flex justify-between items-center'>
       <Link to={'/'} className="logo flex justify-center items-center text-2xl text-purple-700 font-serif">
@@ -13,11 +32,17 @@ export default function Navbar({ toggleSettingsModal, toggleResultsModal }) {
         <div className="right flex justify-center items-center">
           <div className="nav-links">
             <ul className='flex justify-center items-center gap-x-2'>
-              <li>
+              <li className={`${authStatus.isAuth?'hidden':''}`}>
                 <Link className='px-3 py-2 bg-purple-100 rounded text-sm font-medium hover:bg-purple-200 transition-colors' to={'/login'}>Login</Link>
               </li>
-              <li>
+              <li className={`${authStatus.isAuth?'hidden':''}`}>
                 <Link className='px-3 py-2 bg-purple-100 rounded text-sm font-medium hover:bg-purple-200 transition-colors' to={'/signup'}>Signup</Link>
+              </li>
+              <li className={`${authStatus.isAuth?'':'hidden'}`}>
+                <div className='px-3 py-2text-sm font-medium'>{authStatus.email}</div>
+              </li>
+              <li className={`${authStatus.isAuth?'':'hidden'}`}>
+                <button className='px-3 py-2 bg-purple-100 rounded text-sm font-medium hover:bg-purple-200 transition-colors' onClick={tryLogout}>Logout</button>
               </li>
               <li>
                 <div className='p-2 text-slate-700 transition hover:bg-slate-200 rounded-full' onClick={toggleResultsModal}>
