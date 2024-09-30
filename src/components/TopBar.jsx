@@ -1,6 +1,9 @@
-export default function TopBar({currentTextIndex, title,timeElapsed,typedText,resetEverything,nextPara,prevPara}) {
+export default function TopBar({currentTextIndex, setCurrentTextIndex, allTexts,timeElapsed,typedText,resetEverything,nextPara,prevPara}) {
+  function selectChangeHandler(e){
+    setCurrentTextIndex(parseInt(e.currentTarget.value));
+  }
   return (
-    <div className='text-base sm:text-lg md:text-xl lg:text-2xl py-5 flex justify-between w-4/5 sm:w-3/5'>
+    <div className='text-base sm:text-lg md:text-xl lg:text-2xl py-5 flex justify-between w-4/5 sm:w-3/5  select-none'>
       <div className='left flex justify-center items-center gap-x-4'>
         
         <div className="previous-button hover:bg-slate-200 p-2 rounded-full text-slate-700" onClick={prevPara}>
@@ -15,10 +18,17 @@ export default function TopBar({currentTextIndex, title,timeElapsed,typedText,re
           </svg>
         </div>
       </div>
-      <div className="title hidden md:block text-center">
+      {/* <div className="title hidden md:block text-center">
         {currentTextIndex+1}. {title}
-      </div>
-      <div className="right flex items-center justify-center gap-x-4">
+      </div> */}
+      <select id="textSelectList" className="border px-4 py-1 outline-none text-lg" value={currentTextIndex} onChange={selectChangeHandler}>
+      {
+       Array(allTexts.length).fill(1).map((val,ind)=>{
+        return <option key={ind} value={ind}>{ind+1}. {allTexts[ind].title}</option>
+       }) 
+      }
+      </select>
+      <div className="right items-center justify-center gap-x-4 hidden md:flex">
       <div className=' reset-button text-slate-700 hover:bg-slate-200 p-2 rounded-full'onClick={resetEverything}>
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-5 sm:size-6 md:size-7 lg:size-8">
             <path fillRule="evenodd" d="M4.755 10.059a7.5 7.5 0 0 1 12.548-3.364l1.903 1.903h-3.183a.75.75 0 1 0 0 1.5h4.992a.75.75 0 0 0 .75-.75V4.356a.75.75 0 0 0-1.5 0v3.18l-1.9-1.9A9 9 0 0 0 3.306 9.67a.75.75 0 1 0 1.45.388Zm15.408 3.352a.75.75 0 0 0-.919.53 7.5 7.5 0 0 1-12.548 3.364l-1.902-1.903h3.183a.75.75 0 0 0 0-1.5H2.984a.75.75 0 0 0-.75.75v4.992a.75.75 0 0 0 1.5 0v-3.18l1.9 1.9a9 9 0 0 0 15.059-4.035.75.75 0 0 0-.53-.918Z" clipRule="evenodd" />

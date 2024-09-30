@@ -4,7 +4,7 @@ export default function ResultsModal({visible, toggleVisible,results}) {
 
   return (
     visible && <div className='overlay flex justify-center items-center bg-white bg-opacity-50 absolute h-screen w-screen top-0 left-0 text-xl'>
-                    <div className='bg-white hover:scale-110 transition border border-purple-500 rounded p-5 text-xl text-slate-700'>
+                    <div className='bg-white transition border shadow rounded p-5 text-xl text-slate-700'>
         <div className="modal-header flex justify-between items-center">
         <div className='text-center'>Scorecard</div>
             <div className="">
