@@ -77,9 +77,10 @@ function App() {
   ).then((response)=>response.json())
   .then((data)=>{
     if(data.success){
-      setUserInfo({...userInfo, isAuth: true, email: data.message});
+      setUserInfo({...userInfo, isAuth: true, email: data.payload});
       setIsLoading(false);
     }else{
+      console.log("No session was found!");
       setIsLoading(false);
     }
   })

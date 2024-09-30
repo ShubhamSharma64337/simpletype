@@ -23,7 +23,7 @@ export default function Login({setIsLoading,showAlert,setUserInfo}) {
                     setIsLoading(false);
                     showAlert(data.message)
                     if(data.success){
-                        setUserInfo({isAuth: true, email: data.message});
+                        setUserInfo({isAuth: true, email: data.payload});
                         navigate('/');
                     }
             });
