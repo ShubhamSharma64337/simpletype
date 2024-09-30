@@ -41,7 +41,7 @@ function App() {
     <div className='grid grid-cols-4 grid-rows-10  mx-auto h-screen'>
       <Alert alerts={alerts}></Alert>
       <Loader isLoading={isLoading}></Loader>
-        <BrowserRouter basename='/simpletype'>
+        <BrowserRouter basename={process.env.NODE_ENV === 'production'?'/simpletype':undefined}>
           <div className="col-span-4 row-span-1">
             <Navbar toggleSettingsModal={toggleSettingsModal} toggleResultsModal={toggleResultsModal}></Navbar>
           </div>
