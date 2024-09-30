@@ -17,6 +17,9 @@ export default function Navbar({ toggleSettingsModal, toggleResultsModal }) {
                 <Link className='px-3 py-2 bg-purple-100 rounded text-sm font-medium hover:bg-purple-200 transition-colors' to={'/login'}>Login</Link>
               </li>
               <li>
+                <Link className='px-3 py-2 bg-purple-100 rounded text-sm font-medium hover:bg-purple-200 transition-colors' to={'/signup'}>Signup</Link>
+              </li>
+              <li>
                 <div className='p-2 text-slate-700 transition hover:bg-slate-200 rounded-full' onClick={toggleResultsModal}>
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6 sm:size-7 lg:size-8">
                     <path fillRule="evenodd" d="M7.502 6h7.128A3.375 3.375 0 0 1 18 9.375v9.375a3 3 0 0 0 3-3V6.108c0-1.505-1.125-2.811-2.664-2.94a48.972 48.972 0 0 0-.673-.05A3 3 0 0 0 15 1.5h-1.5a3 3 0 0 0-2.663 1.618c-.225.015-.45.032-.673.05C8.662 3.295 7.554 4.542 7.502 6ZM13.5 3A1.5 1.5 0 0 0 12 4.5h4.5A1.5 1.5 0 0 0 15 3h-1.5Z" clipRule="evenodd" />

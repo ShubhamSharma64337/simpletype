@@ -1,26 +1,45 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function Login({setIsLoading,showAlert}) {
-    
-  function tryLogin(){
-    setIsLoading(true);
-    setTimeout(()=>{
-        setIsLoading(false);
-        showAlert("Could not login!");
-    },2000)
-  }
+    const navigate = useNavigate();
+    async function tryLogin(){
+        if(!document.querySelector('#signinForm').checkValidity()){
+            document.querySelector('#signinForm').reportValidity();
+            return;
+        }
+        setIsLoading(true);
+        try{
+            const response = await fetch('http://localhost:3000/login',{
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({email: document.querySelector('#emailInput').value, password: document.querySelector('#passwordInput').value})
+            }).then((response)=> response.json() )
+            .then((data)=>{
+                    setIsLoading(false);
+                    showAlert(data.message)
+                    if(data.success){
+                        navigate('/');
+                    }
+            });
+        } catch(e){
+            console.log(e)
+        }
+      }
+  
   return (
     <div className='flex justify-center col-span-4 row-span-9 items-center'>
-        <div className='flex flex-col gap-y-5 border px-10 py-8 h-min'>
+        <form id='signinForm' className='flex flex-col gap-y-5 border px-10 py-8 h-min'>
             <div className='input-group border-b'>
-                <input type='text' placeholder='Email' id='emailInput' className='px-3 py-2 outline-none'></input>
+                <input type='text' placeholder='Email' id='emailInput' required={true} className='px-3 py-2 outline-none'></input>
             </div>
             <div className='input-group border-b'>
-                <input type='password' placeholder='Password' id='passwordInput' className='px-3 py-2 outline-none'></input>
+                <input type='password' placeholder='Password' id='passwordInput' required={true} className='px-3 py-2 outline-none'></input>
             </div>
             <div className='input-group my-4'>
-                <div className='bg-purple-200 rounded px-3 py-2 text-center hover:cursor-pointer' onClick={tryLogin}>Submit</div>
+                <div className='bg-purple-200 rounded px-3 py-2 text-center hover:cursor-pointer' onClick={tryLogin}>Sign In</div>
             </div>
               <div className='input-group text-sm text-slate-400 flex gap-x-2 items-center justify-center'>
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
@@ -29,7 +48,7 @@ export default function Login({setIsLoading,showAlert}) {
                   <Link to={'/'}>Back to home</Link>
               </div>
 
-        </div>
+        </form>
     </div>
   )
 }

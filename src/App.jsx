@@ -14,6 +14,7 @@ import {
 } from "react-router-dom";
 
 import Login from './components/Login'
+import Signup from './components/Signup'
 
 function App() {
   const [isLoading,setIsLoading] = useState(false);
@@ -48,6 +49,7 @@ function App() {
           <Routes>
             <Route path="/" element={<TypingArea results={results} setResults={setResults} showAlert={showAlert} config={config}/>} />
             <Route path="/login" element={<Login setIsLoading={setIsLoading} showAlert={showAlert}/>} />
+            <Route path="/signup" element={<Signup setIsLoading={setIsLoading} showAlert={showAlert}/>} />
           </Routes>
         </BrowserRouter>
       <UnderConstruction></UnderConstruction>
