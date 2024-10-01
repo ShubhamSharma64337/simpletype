@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 
-export default function Signup({setIsLoading,showAlert}) {
+export default function Signup({setIsLoading,showAlert,urls}) {
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
   const [confirmPassword, setConfirmPassword] = useState(null);
@@ -14,7 +14,7 @@ export default function Signup({setIsLoading,showAlert}) {
     }
     setIsLoading(true);
     try{
-        const response = await fetch('http://localhost:3000/signup',{
+        const response = await fetch(import.meta.env.PRODUCTION?urls.productionUrl+"/signup":urls.devUrl+"/signup",{
             method: 'POST',
             headers: {
                 "Content-Type": "application/json"

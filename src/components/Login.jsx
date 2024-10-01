@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 
-export default function Login({setIsLoading,showAlert,setUserInfo}) {
+export default function Login({setIsLoading,showAlert,setUserInfo,urls}) {
     const navigate = useNavigate();
     async function tryLogin(){
         if(!document.querySelector('#signinForm').checkValidity()){
@@ -10,7 +10,7 @@ export default function Login({setIsLoading,showAlert,setUserInfo}) {
         }
         setIsLoading(true);
         try{
-            const response = await fetch('http://localhost:3000/login',{
+            const response = await fetch(import.meta.env.PRODUCTION?urls.productionUrl+"/login":urls.devUrl+"/login",{
                 method: 'POST',
                 headers: {
                     "Content-Type": "application/json",

@@ -17,6 +17,7 @@ import Login from './components/Login'
 import Signup from './components/Signup'
 
 function App() {
+  const urls = {productionUrl : 'https://simpletype-backend.onrender.com', devUrl : 'http://localhost:3000'}
   const [userInfo, setUserInfo] = useState({isAuth: false, email: null});
   const [isLoading,setIsLoading] = useState(false);
   const [alerts, setAlerts] = useState(null);
@@ -27,7 +28,7 @@ function App() {
 
   async function getResults() {
     setIsLoading(true);
-    const response = await fetch("http://localhost:3000/users/getresults", {
+    const response = await fetch(import.meta.env.PRODUCTION?urls.productionUrl+"/users/getresults":urls.devUrl+"/users/getresults", {
       method: 'GET',
       credentials: 'include'
     }
@@ -70,7 +71,7 @@ function App() {
 
   async function checkLogin(){
     setIsLoading(true);
-    const response = await fetch("http://localhost:3000/loginstatus",{
+    const response = await fetch(import.meta.env.PRODUCTION?urls.productionUrl+"/loginstatus":urls.devUrl+"/loginstatus",{
       method: 'GET',
       credentials: 'include'
     }
@@ -102,14 +103,14 @@ function App() {
     <div className='grid grid-cols-4 grid-rows-10  mx-auto h-screen'>
       <Alert alerts={alerts}></Alert>
       <Loader isLoading={isLoading}></Loader>
-        <BrowserRouter basename={process.env.NODE_ENV === 'production'?'/simpletype':undefined}>
+        <BrowserRouter basename={import.meta.env.NODE_ENV === 'production'?'/simpletype':undefined}>
           <div className="col-span-4 row-span-1">
-            <Navbar showAlert={showAlert} toggleSettingsModal={toggleSettingsModal} toggleResultsModal={toggleResultsModal} setIsLoading={setIsLoading} userInfo={userInfo} setUserInfo={setUserInfo}></Navbar>
+            <Navbar urls={urls} showAlert={showAlert} toggleSettingsModal={toggleSettingsModal} toggleResultsModal={toggleResultsModal} setIsLoading={setIsLoading} userInfo={userInfo} setUserInfo={setUserInfo}></Navbar>
           </div>
           <Routes>
-            <Route path="/" element={<TypingArea getResults={getResults} results={results} setResults={setResults} showAlert={showAlert} config={config} setIsLoading={setIsLoading} userInfo={userInfo}/>} />
-            <Route path="/login" element={<Login setIsLoading={setIsLoading} showAlert={showAlert} setUserInfo={setUserInfo}/>} />
-            <Route path="/signup" element={<Signup setIsLoading={setIsLoading} showAlert={showAlert}/>} />
+            <Route path="/" element={<TypingArea urls={urls} getResults={getResults} results={results} setResults={setResults} showAlert={showAlert} config={config} setIsLoading={setIsLoading} userInfo={userInfo}/>} />
+            <Route path="/login" element={<Login urls={urls} setIsLoading={setIsLoading} showAlert={showAlert} setUserInfo={setUserInfo}/>} />
+            <Route path="/signup" element={<Signup urls={urls} setIsLoading={setIsLoading} showAlert={showAlert}/>} />
           </Routes>
         </BrowserRouter>
       <UnderConstruction></UnderConstruction>

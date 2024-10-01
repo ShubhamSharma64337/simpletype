@@ -2,10 +2,10 @@ import React from 'react'
 import { Outlet, Link } from "react-router-dom";
 
 
-export default function Navbar({ toggleSettingsModal,showAlert,setIsLoading, toggleResultsModal,userInfo, setUserInfo }) {
+export default function Navbar({ toggleSettingsModal,showAlert,setIsLoading, toggleResultsModal,userInfo, setUserInfo,urls }) {
   async function tryLogout(){
     setIsLoading(true);
-    const response = await fetch("http://localhost:3000/users/logout",{
+    const response = await fetch(import.meta.env.PRODUCTION?urls.productionUrl+"/users/logout":urls.devUrl+"/users/logout",{
       method: 'GET',
       credentials: 'include'
     }

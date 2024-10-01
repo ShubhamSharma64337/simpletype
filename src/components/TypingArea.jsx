@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import TopBar from './TopBar'
 import TextDisplay from './TextDisplay'
 
-export default function TypingArea({results, getResults, setResults, showAlert, config, setIsLoading, userInfo}) {
+export default function TypingArea({results, getResults, setResults, showAlert, config, setIsLoading, userInfo, urls}) {
   const [pressed, setPressed] = useState(['NONE']);
   const [characters, setCharacters] = useState(0);
   const [startTime, setStartTime] = useState(null);
@@ -54,7 +54,7 @@ export default function TypingArea({results, getResults, setResults, showAlert, 
   async function uploadResult(res) {
     setIsLoading(true);
     try {
-      const response = await fetch('http://localhost:3000/users/addresult', {
+      const response = await fetch(import.meta.env.PRODUCTION?urls.productionUrl+"/users/addresult":urls.devUrl+"/users/addresult", {
         method: 'POST',
         headers: {
           "Content-Type": "application/json",
