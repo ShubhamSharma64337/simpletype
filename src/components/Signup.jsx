@@ -14,7 +14,7 @@ export default function Signup({setIsLoading,showAlert,urls}) {
     }
     setIsLoading(true);
     try{
-        const response = await fetch(import.meta.env.PRODUCTION?urls.productionUrl+"/signup":urls.devUrl+"/signup",{
+        const response = await fetch(import.meta.env.PROD?urls.productionUrl+"/signup":urls.devUrl+"/signup",{
             method: 'POST',
             headers: {
                 "Content-Type": "application/json"

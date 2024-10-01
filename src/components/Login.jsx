@@ -10,7 +10,7 @@ export default function Login({setIsLoading,showAlert,setUserInfo,urls}) {
         }
         setIsLoading(true);
         try{
-            const response = await fetch(import.meta.env.PRODUCTION?urls.productionUrl+"/login":urls.devUrl+"/login",{
+            const response = await fetch(import.meta.env.PROD?urls.productionUrl+"/login":urls.devUrl+"/login",{
                 method: 'POST',
                 headers: {
                     "Content-Type": "application/json",

@@ -28,7 +28,7 @@ function App() {
 
   async function getResults() {
     setIsLoading(true);
-    const response = await fetch(import.meta.env.PRODUCTION?urls.productionUrl+"/users/getresults":urls.devUrl+"/users/getresults", {
+    const response = await fetch(import.meta.env.PROD?urls.productionUrl+"/users/getresults":urls.devUrl+"/users/getresults", {
       method: 'GET',
       credentials: 'include'
     }
@@ -71,7 +71,7 @@ function App() {
 
   async function checkLogin(){
     setIsLoading(true);
-    const response = await fetch(import.meta.env.PRODUCTION?urls.productionUrl+"/loginstatus":urls.devUrl+"/loginstatus",{
+    const response = await fetch(import.meta.env.PROD?urls.productionUrl+"/loginstatus":urls.devUrl+"/loginstatus",{
       method: 'GET',
       credentials: 'include'
     }

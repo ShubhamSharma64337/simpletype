@@ -5,7 +5,7 @@ import { Outlet, Link } from "react-router-dom";
 export default function Navbar({ toggleSettingsModal,showAlert,setIsLoading, toggleResultsModal,userInfo, setUserInfo,urls }) {
   async function tryLogout(){
     setIsLoading(true);
-    const response = await fetch(import.meta.env.PRODUCTION?urls.productionUrl+"/users/logout":urls.devUrl+"/users/logout",{
+    const response = await fetch(import.meta.env.PROD?urls.productionUrl+"/users/logout":urls.devUrl+"/users/logout",{
       method: 'GET',
       credentials: 'include'
     }
