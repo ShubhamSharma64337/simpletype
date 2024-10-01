@@ -8,7 +8,7 @@ import Alert from './components/Alert'
 import ResultsModal from './components/ResultsModal'
 import TypingArea from './components/TypingArea'
 import {
-  BrowserRouter,
+  HashRouter,
   Route,
   Routes,
 } from "react-router-dom";
@@ -103,7 +103,7 @@ function App() {
     <div className='grid grid-cols-4 grid-rows-10  mx-auto h-screen'>
       <Alert alerts={alerts}></Alert>
       <Loader isLoading={isLoading}></Loader>
-        <BrowserRouter basename={import.meta.env.NODE_ENV === 'production'?'/simpletype':undefined}>
+        <HashRouter basename={import.meta.env.NODE_ENV === 'production'?'/simpletype':undefined}>
           <div className="col-span-4 row-span-1">
             <Navbar urls={urls} showAlert={showAlert} toggleSettingsModal={toggleSettingsModal} toggleResultsModal={toggleResultsModal} setIsLoading={setIsLoading} userInfo={userInfo} setUserInfo={setUserInfo}></Navbar>
           </div>
@@ -112,7 +112,7 @@ function App() {
             <Route path="/login" element={<Login urls={urls} setIsLoading={setIsLoading} showAlert={showAlert} setUserInfo={setUserInfo}/>} />
             <Route path="/signup" element={<Signup urls={urls} setIsLoading={setIsLoading} showAlert={showAlert}/>} />
           </Routes>
-        </BrowserRouter>
+        </HashRouter>
       <UnderConstruction></UnderConstruction>
       <Settings config={config} setConfig={setConfig} visible={showSettingsModal} toggleVisible={toggleSettingsModal}></Settings>
       <ResultsModal visible={showResultsModal} toggleVisible={toggleResultsModal} results={results}></ResultsModal>
